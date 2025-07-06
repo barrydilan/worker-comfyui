@@ -60,8 +60,12 @@ ADD src/start.sh handler.py test_input.json ./
 RUN chmod +x /start.sh
 
 # Add script to install custom nodes
-COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install
+COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install  
 RUN chmod +x /usr/local/bin/comfy-node-install
+RUN comfy-node-install rgthree-comfy comfyui-impact-pack 
+RUN mkdir -p /comfyui/custom_nodes \
+    && git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes \
+        /comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
 
 # Prevent pip from asking for confirmation during uninstall steps in custom nodes
 ENV PIP_NO_INPUT=1
